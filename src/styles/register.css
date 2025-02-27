@@ -1,0 +1,19 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+.register-form input {
+  margin: 10px 0;
+  padding: 8px;
+}
+.register-form button {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.home-button {
+  text-align: rigth;
+}

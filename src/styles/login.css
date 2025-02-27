@@ -1,0 +1,16 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+.login-form input {
+  margin: 10px 0;
+  padding: 8px;
+}
+.login-form button {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+}
