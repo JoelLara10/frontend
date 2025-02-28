@@ -7,7 +7,6 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,75 +59,40 @@ const Profile = () => {
     navigate('/login');
   };
 
-  /*
-  const handleFileChange = (e) => {
-    setImage(e.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    if (!image) {
-      alert('Selecciona una imagen primero.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('foto_perfil', image);
-
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/auth/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      console.log('Imagen subida:', response.data);
-      setUser((prevUser) => ({
-        ...prevUser,
-        foto_perfil: response.data.foto_perfil,
-      }));
-      localStorage.setItem('user', JSON.stringify({ ...user, foto_perfil: response.data.foto_perfil }));
-    } catch (error) {
-      console.error('Error al subir la foto:', error);
-    }
-  };
-  */
-
   if (loading) {
     return <p>Cargando datos...</p>;
   }
 
   return (
-    <div className="container profile-container">
-      <h2>Perfil de Usuario</h2>
-      {error ? (
-        <p>{error}</p>
-      ) : user ? (
-        <>
-          <p><strong>ID:</strong> {user?.id}</p>
-          <p><strong>Nombre:</strong> {user?.nombre}</p>
-          <p><strong>Apellido Paterno:</strong> {user?.apellido_paterno || 'No disponible'}</p>
-          <p><strong>Apellido Materno:</strong> {user?.apellido_materno || 'No disponible'}</p>
-          <p><strong>Email:</strong> {user?.email}</p>
-          <p><strong>Fecha de Nacimiento:</strong> {user?.fechaNacimiento ? new Date(user.fechaNacimiento).toLocaleDateString() : 'No disponible'}</p>
-          <p><strong>Rol:</strong> {user?.rol}</p>
-
-          {/*
-          {user?.foto_perfil && (
-            <div>
-              <p><strong>Foto de Perfil:</strong></p>
-              <img src={`http://localhost:5000${user.foto_perfil}`} alt="Foto de perfil" width="100" height="100" style={{ borderRadius: '50%' }} />
-            </div>
-          )}
-          <input type="file" onChange={handleFileChange} />
-          <button onClick={handleUpload}>Actualizar Foto</button>
-          */}
-          <button onClick={handleLogout}>Cerrar Sesión</button>
-        </>
-      ) : (
-        <p>Error al cargar los datos.</p>
+    <div className="profile-page">
+      {user?.rol === 'admin' && (
+        <div className="admin-buttons">
+          <h3>Opciones de Administrador</h3>
+          <button onClick={() => navigate('/usuarios')}>Gestionar Usuarios</button>
+          <button onClick={() => navigate('/dispositivos')}>Gestionar Dispositivos</button>
+          <button onClick={() => navigate('/alertas')}>Gestionar Alertas</button>
+        </div>
       )}
+
+      <div className="container profile-container">
+        <h2>Perfil de Usuario</h2>
+        {error ? (
+          <p>{error}</p>
+        ) : user ? (
+          <>
+            <p><strong>ID:</strong> {user?.id}</p>
+            <p><strong>Nombre:</strong> {user?.nombre}</p>
+            <p><strong>Apellido Paterno:</strong> {user?.apellido_paterno || 'No disponible'}</p>
+            <p><strong>Apellido Materno:</strong> {user?.apellido_materno || 'No disponible'}</p>
+            <p><strong>Email:</strong> {user?.email}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {user?.fechaNacimiento ? new Date(user.fechaNacimiento).toLocaleDateString() : 'No disponible'}</p>
+            <p><strong>Rol:</strong> {user?.rol}</p>
+            <button onClick={handleLogout}>Cerrar Sesión</button>
+          </>
+        ) : (
+          <p>Error al cargar los datos.</p>
+        )}
+      </div>
     </div>
   );
 };

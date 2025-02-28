@@ -66,8 +66,8 @@ const Register = () => {
         <input type="password" name="password" placeholder="Contraseña" onChange={handleChange} required />
         <input type="date" name="fechaNacimiento" onChange={handleChange} required />
         <button type="submit">Registrarse</button>
-        <p>¿Ya tienes una cuenta? <button type="button" onClick={handleInicioSesion}>Iniciar sesión</button></p>
       </form>
+      <p>¿Ya tienes una cuenta? <button type="button" onClick={handleInicioSesion}>Iniciar sesión</button></p>
     </div>
   );
 };

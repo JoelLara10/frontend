@@ -1,8 +1,49 @@
-.profile-container {
-  text-align: center;
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
-.profile-container img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+
+.admin-buttons {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-buttons h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.admin-buttons button {
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.admin-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.profile-container {
+  margin-top: 80px; /* Ajusta el margen para que no se solape con los botones */
+  padding: 200px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width:500px;
 }

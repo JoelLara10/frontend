@@ -16,7 +16,7 @@ function Home() {
       <h1>Bienvenido a SoundAlertIA</h1>
       <p>Por favor, inicia sesión o regístrate para continuar.</p>
       <div>
-        <button onClick={handleInicioSesion}>Iniciar Sesión</button>
+        <button style={{ marginRight: '10px' }} onClick={handleInicioSesion}>Iniciar Sesión</button>
         <button onClick={handleRegister}>Registrarse</button>
       </div>
     </div>
