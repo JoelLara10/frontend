@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/profile.css';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,8 +20,6 @@ const Profile = () => {
     }
 
     if (!token || !email) {
-      console.error('Token o email no encontrado en localStorage');
-      setError('No se encontró un token o email de usuario.');
       setLoading(false);
       navigate('/login');
       return;
@@ -33,16 +31,10 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        if (!response.data || !response.data.user) {
-          throw new Error('Datos del usuario no encontrados');
-        }
-
         setUser(response.data.user);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         setLoading(false);
-      } catch (err) {
-        console.error('Error al obtener los datos del usuario:', err);
-        setError('Error al cargar los datos del usuario.');
+      } catch {
         setLoading(false);
         navigate('/login');
       }
@@ -66,31 +58,32 @@ const Profile = () => {
   return (
     <div className="profile-page">
       {user?.rol === 'admin' && (
-        <div className="admin-buttons">
-          <h3>Opciones de Administrador</h3>
-          <button onClick={() => navigate('/usuarios')}>Gestionar Usuarios</button>
-          <button onClick={() => navigate('/dispositivos')}>Gestionar Dispositivos</button>
-          <button onClick={() => navigate('/alertas')}>Gestionar Alertas</button>
+        <div style={{ marginBottom: "20px", marginRight: "20px", display: "flex", justifyContent: "flex-end" }}>
+          <Link to="/usuarios">
+            <button>Usuarios</button>
+          </Link>
+          <Link to="/dispositivos">
+            <button>Dispositivos</button>
+          </Link>
+          <Link to="/alertas">
+            <button>Alertas</button>
+          </Link>
         </div>
       )}
 
       <div className="container profile-container">
         <h2>Perfil de Usuario</h2>
-        {error ? (
-          <p>{error}</p>
-        ) : user ? (
+        {user && (
           <>
-            <p><strong>ID:</strong> {user?.id}</p>
-            <p><strong>Nombre:</strong> {user?.nombre}</p>
-            <p><strong>Apellido Paterno:</strong> {user?.apellido_paterno || 'No disponible'}</p>
-            <p><strong>Apellido Materno:</strong> {user?.apellido_materno || 'No disponible'}</p>
-            <p><strong>Email:</strong> {user?.email}</p>
-            <p><strong>Fecha de Nacimiento:</strong> {user?.fechaNacimiento ? new Date(user.fechaNacimiento).toLocaleDateString() : 'No disponible'}</p>
-            <p><strong>Rol:</strong> {user?.rol}</p>
+            <p><strong>ID:</strong> {user.id}</p>
+            <p><strong>Nombre:</strong> {user.nombre}</p>
+            <p><strong>Apellido Paterno:</strong> {user.apellido_paterno || 'No disponible'}</p>
+            <p><strong>Apellido Materno:</strong> {user.apellido_materno || 'No disponible'}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {user.fechaNacimiento ? new Date(user.fechaNacimiento).toLocaleDateString() : 'No disponible'}</p>
+            <p><strong>Rol:</strong> {user.rol}</p>
             <button onClick={handleLogout}>Cerrar Sesión</button>
           </>
-        ) : (
-          <p>Error al cargar los datos.</p>
         )}
       </div>
     </div>

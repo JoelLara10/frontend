@@ -29,7 +29,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="reset-password-form" onSubmit={handleSubmit}>
       <input type="password" placeholder="Nueva Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
       <input type="password" placeholder="Confirmar Nueva Contraseña" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
       <button type="submit">Restablecer Contraseña</button>
