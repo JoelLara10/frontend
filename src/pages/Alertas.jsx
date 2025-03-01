@@ -20,7 +20,7 @@ const Alertas = () => {
           <button>Alertas</button>
         </Link>
       </div>
-      <h1>Gestión de Dispositivos</h1>
+      <h1>Gestión de Alertas</h1>
       <AlertaList />
     </div>
   );

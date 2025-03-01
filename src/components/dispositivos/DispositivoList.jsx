@@ -8,6 +8,9 @@ const DispositivoList = () => {
     const [dispositivos, setDispositivos] = useState([]);
     const [editingDispositivo, setEditingDispositivo] = useState(null);
     const [isAdding, setIsAdding] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     useEffect(() => {
         obtenerDispositivos();
@@ -42,7 +45,7 @@ const DispositivoList = () => {
     };
 
     const handleSave = () => {
-        obtenerDispositivos(); // Recargar la lista después de agregar/editar
+        obtenerDispositivos();
         setEditingDispositivo(null);
         setIsAdding(false);
     };
@@ -52,14 +55,50 @@ const DispositivoList = () => {
         setIsAdding(false);
     };
 
+    const handleImport = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+            await axios.post('http://localhost:5000/api/dispositivos/import-excel', formData);
+            obtenerDispositivos();
+        } catch (error) {
+            console.error('Error al importar dispositivos:', error);
+        }
+    };
+
+    const handleExport = async () => {
+        window.location.href = 'http://localhost:5000/api/dispositivos/export-excel';
+    };
+
+    const filteredDispositivos = dispositivos.filter(dispositivo =>
+        Object.values(dispositivo).some(value =>
+            value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    );
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentDispositivos = filteredDispositivos.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredDispositivos.length / itemsPerPage);
+
     return (
         <div className="dispositivo-list">
             <h2>Lista de Dispositivos</h2>
-
-            {!isAdding && !editingDispositivo && (
-                <button className="add-button" onClick={handleAdd}>Agregar Dispositivo</button>
-            )}
-
+            <input
+                type="text"
+                placeholder="Buscar dispositivo..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <div>
+            <button className="add-button" onClick={handleAdd}>Agregar Dispositivo</button>
+            <input type="file" onChange={handleImport} />
+            <button className="export-button" onClick={handleExport}>Exportar a Excel</button>
+            </div>
             {(isAdding || editingDispositivo) && (
                 <DispositivoForm dispositivo={editingDispositivo} onSave={handleSave} onCancel={handleCancel} />
             )}
@@ -76,11 +115,23 @@ const DispositivoList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {dispositivos.map(dispositivo => (
+                    {currentDispositivos.map(dispositivo => (
                         <DispositivoItem key={dispositivo._id} dispositivo={dispositivo} onDelete={handleDelete} onEdit={handleEdit} />
                     ))}
                 </tbody>
             </table>
+
+            <div className="pagination">
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                        key={i + 1}
+                        className={currentPage === i + 1 ? 'active' : ''}
+                        onClick={() => setCurrentPage(i + 1)}
+                    >
+                        {i + 1}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 };
