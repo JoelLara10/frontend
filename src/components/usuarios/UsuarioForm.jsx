@@ -34,8 +34,10 @@ const UsuarioForm = ({ usuario, onSave }) => {
         try {
             if (usuario && usuario._id) {
                 await axios.put(`http://localhost:5000/api/usuarios/${usuario._id}`, formData);
+                alert("Usuario actualizado correctamente");
             } else {
                 await axios.post('http://localhost:5000/api/auth/register', formData);
+                alert("Usuario agregado correctamente");
             }
             onSave();
         } catch (error) {

@@ -40,8 +40,10 @@ const DispositivoForm = ({ dispositivo, onSave, onCancel }) => {
     try {
       if (dispositivo) {
         await axios.put(`http://localhost:5000/api/dispositivos/${dispositivo._id}`, formData);
+        alert("Dispositivo actualizado correctamente");
       } else {
         await axios.post("http://localhost:5000/api/dispositivos", formData);
+        alert("Dispositivo agregado correctamente");
       }
       onSave(); // Llama a la función para actualizar la lista de dispositivos
     } catch (error) {
