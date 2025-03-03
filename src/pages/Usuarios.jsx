@@ -19,6 +19,9 @@ const Usuarios = () => {
         <Link to="/alertas">
           <button>Alertas</button>
         </Link>
+        <Link to="/logout">
+          <button>Cerrar Sesion</button>
+        </Link>
       </div>
       <h1>Gestión de Usuarios</h1>
       <UsuarioList />

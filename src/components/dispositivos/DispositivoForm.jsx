@@ -71,7 +71,7 @@ const DispositivoForm = ({ dispositivo, onSave, onCancel }) => {
         </select>
 
         <button type="submit">{dispositivo ? "Actualizar" : "Agregar"}</button>
-        {dispositivo && <button type="button" onClick={onCancel}>Cancelar</button>}
+        {/* {dispositivo && <button type="button" onClick={onCancel}>Cancelar</button>} */}
       </form>
     </div>
   );

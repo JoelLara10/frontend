@@ -71,6 +71,11 @@ const Profile = () => {
         </div>
       )}
 
+      {/* 🔹 Botón corregido para cerrar sesión */}
+      <button onClick={handleLogout} style={{ background: "red", color: "white", padding: "10px", borderRadius: "5px" }}>
+        Cerrar Sesión
+      </button>
+
       <div className="container profile-container">
         <h2>Perfil de Usuario</h2>
         {user && (
@@ -82,7 +87,6 @@ const Profile = () => {
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Fecha de Nacimiento:</strong> {user.fechaNacimiento ? new Date(user.fechaNacimiento).toLocaleDateString() : 'No disponible'}</p>
             <p><strong>Rol:</strong> {user.rol}</p>
-            <button onClick={handleLogout}>Cerrar Sesión</button>
           </>
         )}
       </div>

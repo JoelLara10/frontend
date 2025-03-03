@@ -104,8 +104,12 @@ const DispositivoList = () => {
         <button className="export-button" onClick={ handleExport }>Exportar a Excel</button>
       </div>
       { ( isAdding || editingDispositivo ) && (
-        <DispositivoForm dispositivo={ editingDispositivo } onSave={ handleSave } onCancel={ handleCancel } />
+        <div>
+          <DispositivoForm dispositivo={ editingDispositivo } onSave={ handleSave } />
+          <button className="btn btn-cancel" onClick={ handleCancel }>Cancelar</button>
+        </div>
       ) }
+
 
       <table className="dispositivo-table">
         <thead>
@@ -127,7 +131,7 @@ const DispositivoList = () => {
 
       <div className="pagination">
         <button
-          className="btn btn-prev"
+          className="btn-prev"
           onClick={ () => setCurrentPage( prev => Math.max( prev - 1, 1 ) ) }
           disabled={ currentPage === 1 }
         >
@@ -135,7 +139,7 @@ const DispositivoList = () => {
         </button>
         <span>Página { currentPage } de { totalPages }</span>
         <button
-          className="btn btn-next"
+          className="btn-next"
           onClick={ () => setCurrentPage( prev => Math.min( prev + 1, totalPages ) ) }
           disabled={ currentPage === totalPages }
         >

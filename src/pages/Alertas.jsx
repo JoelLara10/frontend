@@ -19,6 +19,9 @@ const Alertas = () => {
         <Link to="/alertas">
           <button>Alertas</button>
         </Link>
+        <Link to="/login">
+          <button>Cerrar Sesión</button>
+        </Link>
       </div>
       <h1>Gestión de Alertas</h1>
       <AlertaList />

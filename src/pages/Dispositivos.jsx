@@ -19,6 +19,9 @@ const Dispositivos = () => {
         <Link to="/alertas">
           <button>Alertas</button>
         </Link>
+        <Link to="/logout">
+          <button>Cerrar Sesion</button>
+        </Link>
       </div>
       <h1>Gestión de Dispositivos</h1>
       <DispositivoList />

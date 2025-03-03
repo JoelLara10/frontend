@@ -47,6 +47,7 @@ const UsuarioForm = ({ usuario, onSave }) => {
 
     return (
         <form onSubmit={handleSubmit}>
+          <h2>{usuario ? "Editar Usuario" : "Nuevo Usuario"}</h2>
             <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
             <input type="text" name="apellido_paterno" value={formData.apellido_paterno} onChange={handleChange} placeholder="Apellido Paterno" required />
             <input type="text" name="apellido_materno" value={formData.apellido_materno} onChange={handleChange} placeholder="Apellido Materno" required />
