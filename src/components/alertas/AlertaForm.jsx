@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Form, Button, Container } from "react-bootstrap";
 
 const AlertaForm = ({ alerta, onSave }) => {
   const [formData, setFormData] = useState({
@@ -46,15 +47,75 @@ const AlertaForm = ({ alerta, onSave }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{alerta ? "Editar Alerta" : "Nueva Alerta"}</h2>
-      <input type="text" name="tipo_sonido" value={formData.tipo_sonido} onChange={handleChange} placeholder="Tipo de sonido" required />
-      <input type="text" name="nivel_sonido" value={formData.nivel_sonido} onChange={handleChange} placeholder="Nivel de sonido" required />
-      <input type="text" name="texto_icono" value={formData.texto_icono} onChange={handleChange} placeholder="Texto Icono" required />
-      <input type="text" name="dispositivo_id" value={formData.dispositivo_id} onChange={handleChange} placeholder="ID del dispositivo" required />
-      <input type="text" name="ubicacion" value={formData.ubicacion} onChange={handleChange} placeholder="Ubicación" required />
-      <button type="submit">{alerta ? "Actualizar" : "Guardar"}</button>
-    </form>
+    <Container>
+      <Form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm bg-light">
+        <h2 className="text-center">{alerta ? "Editar Alerta" : "Nueva Alerta"}</h2>
+        
+        <Form.Group className="mb-3">
+          <Form.Label>Tipo de Sonido</Form.Label>
+          <Form.Control 
+            type="text" 
+            name="tipo_sonido" 
+            value={formData.tipo_sonido} 
+            onChange={handleChange} 
+            placeholder="Tipo de sonido" 
+            required 
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Nivel de Sonido</Form.Label>
+          <Form.Control 
+            type="text" 
+            name="nivel_sonido" 
+            value={formData.nivel_sonido} 
+            onChange={handleChange} 
+            placeholder="Nivel de sonido" 
+            required 
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Texto Icono</Form.Label>
+          <Form.Control 
+            type="text" 
+            name="texto_icono" 
+            value={formData.texto_icono} 
+            onChange={handleChange} 
+            placeholder="Texto Icono" 
+            required 
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>ID del Dispositivo</Form.Label>
+          <Form.Control 
+            type="text" 
+            name="dispositivo_id" 
+            value={formData.dispositivo_id} 
+            onChange={handleChange} 
+            placeholder="ID del dispositivo" 
+            required 
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Ubicación</Form.Label>
+          <Form.Control 
+            type="text" 
+            name="ubicacion" 
+            value={formData.ubicacion} 
+            onChange={handleChange} 
+            placeholder="Ubicación" 
+            required 
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" className="w-100">
+          {alerta ? "Actualizar" : "Guardar"}
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

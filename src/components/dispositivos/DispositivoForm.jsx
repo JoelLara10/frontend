@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Form, Button, Container } from "react-bootstrap";
 
 const DispositivoForm = ({ dispositivo, onSave, onCancel }) => {
   // Estado inicial del formulario
@@ -52,28 +53,66 @@ const DispositivoForm = ({ dispositivo, onSave, onCancel }) => {
   };
 
   return (
-    <div>
-      <h2>{dispositivo ? "Editar Dispositivo" : "Agregar Dispositivo"}</h2>
-      <form onSubmit={handleSubmit}>
-        <label>ID del Dispositivo:</label>
-        <input type="text" name="dispositivo_id" value={formData.dispositivo_id} onChange={handleChange} required />
+    <Container className="mt-4">
+      <Form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm bg-light">
+        <h2 className="text-center">{dispositivo ? "Editar Dispositivo" : "Agregar Dispositivo"}</h2>
 
-        <label>ID del Usuario:</label>
-        <input type="text" name="usuario_id" value={formData.usuario_id} onChange={handleChange} required />
+        <Form.Group className="mb-3">
+          <Form.Label>ID del Dispositivo</Form.Label>
+          <Form.Control
+            type="text"
+            name="dispositivo_id"
+            value={formData.dispositivo_id}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-        <label>Ubicación:</label>
-        <input type="text" name="ubicacion" value={formData.ubicacion} onChange={handleChange} required />
+        <Form.Group className="mb-3">
+          <Form.Label>ID del Usuario</Form.Label>
+          <Form.Control
+            type="text"
+            name="usuario_id"
+            value={formData.usuario_id}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-        <label>Estado:</label>
-        <select name="estado" value={formData.estado} onChange={handleChange}>
-          <option value="activo">Activo</option>
-          <option value="inactivo">Inactivo</option>
-        </select>
+        <Form.Group className="mb-3">
+          <Form.Label>Ubicación</Form.Label>
+          <Form.Control
+            type="text"
+            name="ubicacion"
+            value={formData.ubicacion}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-        <button type="submit">{dispositivo ? "Actualizar" : "Agregar"}</button>
-        {/* {dispositivo && <button type="button" onClick={onCancel}>Cancelar</button>} */}
-      </form>
-    </div>
+        <Form.Group className="mb-3">
+          <Form.Label>Estado</Form.Label>
+          <Form.Select name="estado" value={formData.estado} onChange={handleChange}>
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </Form.Select>
+        </Form.Group>
+
+        <Button variant="primary" type="submit" className="w-100">
+          {dispositivo ? "Actualizar" : "Agregar"}
+        </Button>
+        {dispositivo && (
+          <Button
+            variant="secondary"
+            type="button"
+            className="w-100 mt-3"
+            onClick={onCancel}
+          >
+            Cancelar
+          </Button>
+        )}
+      </Form>
+    </Container>
   );
 };
 

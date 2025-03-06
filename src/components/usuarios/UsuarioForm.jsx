@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Form, Button, Container } from 'react-bootstrap';
 
 const UsuarioForm = ({ usuario, onSave }) => {
     const [formData, setFormData] = useState({
@@ -46,23 +47,45 @@ const UsuarioForm = ({ usuario, onSave }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-          <h2>{usuario ? "Editar Usuario" : "Nuevo Usuario"}</h2>
-            <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
-            <input type="text" name="apellido_paterno" value={formData.apellido_paterno} onChange={handleChange} placeholder="Apellido Paterno" required />
-            <input type="text" name="apellido_materno" value={formData.apellido_materno} onChange={handleChange} placeholder="Apellido Materno" required />
-            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
-            
-            {/* Ocultar password si está editando */}
-            {!usuario && <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Contraseña" required />}
-            
-            <input type="date" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} required />
-            <select name="rol" value={formData.rol} onChange={handleChange}>
-                <option value="usuario">Usuario</option>
-                <option value="admin">Admin</option>
-            </select>
-            <button type="submit">{usuario ? 'Actualizar' : 'Registrar'}</button>
-        </form>
+        <Container>
+            <Form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm bg-light">
+                <h2 className="text-center">{usuario ? "Editar Usuario" : "Nuevo Usuario"}</h2>
+                <Form.Group className="mb-3">
+                    <Form.Label>Nombre</Form.Label>
+                    <Form.Control type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Apellido Paterno</Form.Label>
+                    <Form.Control type="text" name="apellido_paterno" value={formData.apellido_paterno} onChange={handleChange} required />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Apellido Materno</Form.Label>
+                    <Form.Control type="text" name="apellido_materno" value={formData.apellido_materno} onChange={handleChange} required />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} required />
+                </Form.Group>
+                {!usuario && (
+                    <Form.Group className="mb-3">
+                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} required />
+                    </Form.Group>
+                )}
+                <Form.Group className="mb-3">
+                    <Form.Label>Fecha de Nacimiento</Form.Label>
+                    <Form.Control type="date" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} required />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Rol</Form.Label>
+                    <Form.Select name="rol" value={formData.rol} onChange={handleChange}>
+                        <option value="usuario">Usuario</option>
+                        <option value="admin">Admin</option>
+                    </Form.Select>
+                </Form.Group>
+                <Button variant="primary" type="submit" className="w-100">{usuario ? 'Actualizar' : 'Registrar'}</Button>
+            </Form>
+        </Container>
     );
 };
 

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { useState } from 'react';
 import AppRoutes from './routes/AppRoutes';
-import './App.css';
+// simport './App.css';
 import { useEffect } from 'react';
 
 function App() {
