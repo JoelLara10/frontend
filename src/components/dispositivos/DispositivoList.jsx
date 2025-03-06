@@ -5,7 +5,7 @@ import DispositivoItem from './DispositivoItem';
 import DispositivoForm from './DispositivoForm';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { Link, Navigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const DispositivoList = () => {
   const [ dispositivos, setDispositivos ] = useState( [] );
@@ -100,9 +100,9 @@ const DispositivoList = () => {
   const COLORS = [ '#0088FE', '#FF8042' ];
 
   return (
-    <div style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://source.unsplash.com/1600x900/?technology,sound")', backgroundSize: 'cover', backgroundPosition: 'center', height: '100vh', width: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
+    <div style={ { backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://source.unsplash.com/1600x900/?technology,sound")', backgroundSize: 'cover', backgroundPosition: 'center', height: '100vh', width: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' } }>
 
-      {/* Navbar Superior */}
+      {/* Navbar Superior */ }
       <Navbar bg="dark" variant="dark" expand="lg" className="px-4">
         <Navbar.Brand className="fs-3 fw-bold text-primary">SoundAlertIA</Navbar.Brand>
         <Nav className="ms-auto d-flex align-items-center">
@@ -129,91 +129,90 @@ const DispositivoList = () => {
         </Nav>
       </Navbar>
 
-      <div className="container mt-4">
-        <h2>Lista de Dispositivos</h2>
 
-        {/* Barra de Búsqueda */}
+      <h2>Lista de Dispositivos</h2>
+      <div className="mb-3">
         <input
           type="text"
-          className="form-control mb-3"
-          placeholder="Buscar dispositivo..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          className="form-control"
+          placeholder="Buscar usuario..."
+          value={ searchTerm }
+          onChange={ ( e ) => setSearchTerm( e.target.value ) }
         />
+      </div>
 
-        {/* Botones de Acción */}
-        <div className="mb-3">
-          <button className="btn btn-primary me-3" onClick={handleAdd}>Agregar Dispositivo</button>
-          <input type="file" className="me-3" onChange={handleImport} />
-          <button className="btn btn-success" onClick={handleExport}>Exportar a Excel</button>
+      {/* Botones de Acción */ }
+      <div className="d-flex justify-content-center align-items-center">
+        <button className="btn btn-primary" onClick={ handleAdd }>Agregar Dispositivo</button>
+        <input type="file" className="ms-3" onChange={ handleImport } />
+        <button className="btn btn-success ms-3" onClick={ handleExport }>Exportar a Excel</button>
+      </div>
+
+      {/* Formulario para Agregar/Editar Dispositivo */ }
+      { ( isAdding || editingDispositivo ) && (
+        <div>
+          <DispositivoForm dispositivo={ editingDispositivo } onSave={ handleSave } />
+          <button className="btn btn-secondary mt-2" onClick={ handleCancel }>Cancelar</button>
         </div>
+      ) }
 
-        {/* Formulario para Agregar/Editar Dispositivo */}
-        { (isAdding || editingDispositivo) && (
-          <div>
-            <DispositivoForm dispositivo={editingDispositivo} onSave={handleSave} />
-            <button className="btn btn-secondary mt-2" onClick={handleCancel}>Cancelar</button>
-          </div>
-        )}
+      {/* Tabla de Dispositivos */ }
+      <table className="table table-striped mt-4">
+        <thead>
+          <tr>
+            <th>ID Dispositivo</th>
+            <th>ID Usuario</th>
+            <th>Ubicación</th>
+            <th>Estado</th>
+            <th>Último Reporte</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          { currentDispositivos.map( dispositivo => (
+            <DispositivoItem key={ dispositivo._id } dispositivo={ dispositivo } onDelete={ handleDelete } onEdit={ handleEdit } />
+          ) ) }
+        </tbody>
+      </table>
 
-        {/* Tabla de Dispositivos */}
-        <table className="table table-striped mt-4">
-          <thead>
-            <tr>
-              <th>ID Dispositivo</th>
-              <th>ID Usuario</th>
-              <th>Ubicación</th>
-              <th>Estado</th>
-              <th>Último Reporte</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            { currentDispositivos.map( dispositivo => (
-              <DispositivoItem key={ dispositivo._id } dispositivo={ dispositivo } onDelete={ handleDelete } onEdit={ handleEdit } />
-            )) }
-          </tbody>
-        </table>
+      {/* Paginación */ }
+      <div className="d-flex justify-content-between align-items-center mt-3">
+        <button
+          className="btn btn-secondary"
+          onClick={ () => setCurrentPage( prev => Math.max( prev - 1, 1 ) ) }
+          disabled={ currentPage === 1 }
+        >
+          Anterior
+        </button>
+        <span>Página { currentPage } de { totalPages }</span>
+        <button
+          className="btn btn-secondary"
+          onClick={ () => setCurrentPage( prev => Math.min( prev + 1, totalPages ) ) }
+          disabled={ currentPage === totalPages }
+        >
+          Siguiente
+        </button>
+      </div>
 
-        {/* Paginación */}
-        <div className="d-flex justify-content-between align-items-center mt-3">
-          <button
-            className="btn btn-secondary"
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
+      {/* Gráfico de Pie */ }
+      <div className="mt-4">
+        <PieChart width={ 400 } height={ 300 }>
+          <Pie
+            data={ dataChart }
+            cx="50%"
+            cy="50%"
+            outerRadius={ 100 }
+            fill="#8884d8"
+            dataKey="value"
+            label
           >
-            Anterior
-          </button>
-          <span>Página { currentPage } de { totalPages }</span>
-          <button
-            className="btn btn-secondary"
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-          >
-            Siguiente
-          </button>
-        </div>
-
-        {/* Gráfico de Pie */}
-        <div className="mt-4">
-          <PieChart width={400} height={300}>
-            <Pie
-              data={dataChart}
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              fill="#8884d8"
-              dataKey="value"
-              label
-            >
-              { dataChart.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              )) }
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </div>
+            { dataChart.map( ( entry, index ) => (
+              <Cell key={ `cell-${ index }` } fill={ COLORS[ index % COLORS.length ] } />
+            ) ) }
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
       </div>
     </div>
   );

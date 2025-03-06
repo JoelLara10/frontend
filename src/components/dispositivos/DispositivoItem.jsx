@@ -9,13 +9,22 @@ const DispositivoItem = ({ dispositivo, onDelete, onEdit }) => {
             <td>{dispositivo.estado}</td>
             <td>{new Date(dispositivo.ultima_reporte).toLocaleString()}</td>
             <td>
-                <button style={{ backgroundColor: 'green', color: 'white', marginRight: '5px' }} onClick={() => onEdit(dispositivo)}>
-                    Editar
-                </button>
-                <button style={{ backgroundColor: 'red', color: 'white' }} onClick={() => onDelete(dispositivo._id)}>
-                    Eliminar
-                </button>
-            </td>
+        {/* Botón Editar */}
+        <button 
+          className="btn btn-warning me-2" 
+          onClick={() => onEdit(dispositivo)}
+        >
+          Editar
+        </button>
+
+        {/* Botón Eliminar */}
+        <button 
+          className="btn btn-danger" 
+          onClick={() => onDelete(dispositivo._id)}
+        >
+          Eliminar
+        </button>
+      </td>
         </tr>
     );
 };

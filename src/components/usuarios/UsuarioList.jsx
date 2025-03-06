@@ -4,7 +4,7 @@ import UsuarioForm from './UsuarioForm';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Navbar, Nav, Button } from 'react-bootstrap'; // Importa los componentes de react-bootstrap
-import { Link, Navigate } from 'react-router-dom'; // Importa Link de react-router-dom
+import { Link, Navigate } from 'react-router-dom'; 
 
 // Registrar las escalas y los elementos necesarios de Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -154,10 +154,6 @@ const UsuarioList = () => {
     maintainAspectRatio: false,
   };
 
-  const handleLogout = () => {
-    Navigate('/login');
-  };
-
   return (
     <div style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://source.unsplash.com/1600x900/?technology,sound")', backgroundSize: 'cover', backgroundPosition: 'center', height: '100vh', width: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
 
@@ -181,9 +177,11 @@ const UsuarioList = () => {
                       Alertas
                     </Button>
                   </Link>
-              <Button variant="danger" onClick={handleLogout}>
-                Cerrar Sesión
-              </Button>
+              <Link to="/login">
+                          <Button variant="danger" className="me-2">
+                            Cerrar Sesión
+                          </Button>
+                        </Link>
         </Nav>
       </Navbar>
 
@@ -199,7 +197,7 @@ const UsuarioList = () => {
         />
       </div>
 
-      <div>
+      <div className="d-flex justify-content-center align-items-center">
         {!isAdding && !editingUser && (
           <>
             <button className="btn btn-primary" onClick={handleAdd}>Agregar Usuario</button>

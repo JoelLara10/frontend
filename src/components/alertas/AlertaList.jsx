@@ -154,12 +154,12 @@ const AlertaList = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      <div>
+      <div className="d-flex justify-content-center align-items-center">
         {!isAdding && !editingAlerta && (
           <>
-            <button className="add-button" onClick={handleAdd}>Agregar Alerta</button>
-            <input type="file" accept=".xlsx" onChange={handleImport} />
-            <button className="export-button" onClick={handleExport}>Exportar a Excel</button>
+            <button className="btn btn-primary" onClick={handleAdd}>Agregar Alerta</button>
+            <input type="file" accept=".xlsx" className="ms-3" onChange={handleImport} />
+            <button className="btn btn-success ms-3" onClick={handleExport}>Exportar a Excel</button>
           </>
         )}
       </div>
@@ -174,7 +174,7 @@ const AlertaList = () => {
       {paginatedAlertas.length === 0 ? (
         <p>No se encontraron alertas.</p>
       ) : (
-        <table className="alertas-table">
+        <table className="table table-striped mt-4">
           <thead>
             <tr>
               <th>ID</th>
@@ -198,8 +198,8 @@ const AlertaList = () => {
                 <td>{alerta.fecha_hora ? new Date(alerta.fecha_hora).toLocaleDateString() : "No registrada"}</td>
                 <td>{alerta.notificacion || "Desconocido"}</td>
                 <td>
-                  <button className="add-button" onClick={() => handleEdit(alerta)}>Editar</button>
-                  <button className="delete-button" onClick={() => handleDelete(alerta._id)}>Eliminar</button>
+                  <button className="btn btn-warning" onClick={() => handleEdit(alerta)}>Editar</button>
+                  <button className="btn btn-danger m-2" onClick={() => handleDelete(alerta._id)}>Eliminar</button>
                 </td>
               </tr>
             ))}
@@ -207,8 +207,9 @@ const AlertaList = () => {
         </table>
       )}
 
-      <div className="pagination">
+      <div className="d-flex justify-content-between align-items-center mt-3">
         <button
+          className="btn btn-secondary"
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
@@ -216,6 +217,7 @@ const AlertaList = () => {
         </button>
         <span>Página {currentPage} de {totalPages}</span>
         <button
+          className="btn btn-secondary"
           onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
         >
