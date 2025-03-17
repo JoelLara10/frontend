@@ -1,25 +1,23 @@
-import { BrowserRouter as Router } from 'react-router-dom';
-import { useState } from 'react';
-import AppRoutes from './routes/AppRoutes';
-// simport './App.css';
-import { useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
-  const [ user, setUser ] = useState( null );
+  const [user, setUser] = useState(null);
 
-  useEffect( () => {
-    const storedUser = localStorage.getItem( 'user' );
-    if ( storedUser ) {
-      setUser( JSON.parse( storedUser ) );
+  useEffect(() => {
+    // Recuperar usuario de localStorage al cargar la aplicación
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
-  }, [] );
+  }, []);
 
   return (
     <Router>
-      <AppRoutes user={ user } setUser={ setUser } />
+      <AppRoutes user={user} setUser={setUser} />
     </Router>
   );
 }
-
 
 export default App;

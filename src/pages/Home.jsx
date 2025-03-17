@@ -39,7 +39,7 @@ function Home() {
       </Navbar>
 
       {/* Contenido centrado */ }
-      <Container className="d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center">
+      <Container className="d-flex flex-column justify-content-center align-items-center text-center">
         <Card className="shadow-lg border-0 p-4 bg-white bg-opacity-75" style={ { maxWidth: '800px' } }>
           <Card.Body>
             <h1 className="text-primary">Bienvenido a SoundAlertIA</h1>
