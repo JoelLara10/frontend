@@ -80,8 +80,24 @@ const DispositivoList = () => {
   };
 
   const handleExport = async () => {
-    window.location.href = 'http://localhost:5000/api/dispositivos/export-excel';
+    try {
+      const response = await axios.get('http://localhost:5000/api/dispositivos/export-excel', {
+        responseType: 'blob' // Importante para manejar archivos binarios
+      });
+  
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'dispositivos_exportados.xlsx'); // Nombre del archivo
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error al exportar dispositivos:', error);
+      alert('Error al exportar dispositivos.');
+    }
   };
+  
 
   const filteredDispositivos = dispositivos.filter( dispositivo =>
     Object.values( dispositivo ).some( value =>
