@@ -36,7 +36,7 @@ const AlertaForm = ({ alerta, onSave }) => {
         await axios.put(`http://localhost:5000/api/alertas/${alerta._id}`, formData);
         alert("Alerta actualizada correctamente");
       } else {
-        await axios.post("http://localhost:5000/api/alertas", formData);
+        await axios.post("http://localhost:5000/api/alertas/", formData);
         alert("Alerta agregada correctamente");
       }
       onSave();

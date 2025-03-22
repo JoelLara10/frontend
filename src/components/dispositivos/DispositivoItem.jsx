@@ -3,6 +3,7 @@ import React from 'react';
 const DispositivoItem = ({ dispositivo, onDelete, onEdit }) => {
     return (
         <tr>
+            <td>{dispositivo._id}</td>
             <td>{dispositivo.dispositivo_id}</td>
             <td>{dispositivo.usuario_id ? dispositivo.usuario_id.nombre : 'Sin usuario'}</td>
             <td>{dispositivo.ubicacion}</td>

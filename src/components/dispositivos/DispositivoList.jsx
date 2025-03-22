@@ -33,6 +33,8 @@ const DispositivoList = () => {
       try {
         await axios.delete( `http://localhost:5000/api/dispositivos/${ id }` );
         setDispositivos( dispositivos.filter( d => d._id !== id ) );
+        alert( 'Dispositivo eliminado correctamente.' );
+        obtenerDispositivos();
       } catch ( error ) {
         console.error( 'Error al eliminar dispositivo:', error.response?.data || error );
       }
@@ -160,6 +162,7 @@ const DispositivoList = () => {
       <table className="table table-striped mt-4">
         <thead>
           <tr>
+            <th>ID</th>
             <th>ID Dispositivo</th>
             <th>ID Usuario</th>
             <th>Ubicación</th>
