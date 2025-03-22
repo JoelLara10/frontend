@@ -77,41 +77,45 @@ const UsuarioList = () => {
     setIsAdding( false );
   };
 
-  const handleImport = async ( event ) => {
-    const file = event.target.files[ 0 ];
-    if ( !file ) return;
-
+  const handleImport = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+  
     const formData = new FormData();
-    formData.append( 'file', file );
-
+    formData.append('file', file);
+  
     try {
-      await axios.post( 'http://localhost:5000/api/import-excel', formData, {
+      const response = await axios.post('http://localhost:5000/api/usuarios/import-excel', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
-      } );
-      obtenerUsuarios();
-      alert( 'Usuarios importados correctamente.' );
-    } catch ( error ) {
-      console.error( 'Error al importar usuarios:', error );
-      alert( 'Error al importar usuarios.' );
+      });
+      
+      alert(response.data.message);
+      obtenerUsuarios(); // Actualizar la lista
+    } catch (error) {
+      console.error('Error al importar usuarios:', error.response?.data || error);
+      alert(error.response?.data?.error || 'Error al importar usuarios.');
     }
   };
+  
 
   const handleExport = async () => {
     try {
-      const response = await axios.get( 'http://localhost:5000/api/export-excel', {
+      const response = await axios.get('http://localhost:5000/api/usuarios/export-excel', {
         responseType: 'blob',
-      } );
-
-      const url = window.URL.createObjectURL( new Blob( [ response.data ] ) );
-      const link = document.createElement( 'a' );
+      });
+  
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
       link.href = url;
-      link.setAttribute( 'download', 'usuarios.xlsx' );
-      document.body.appendChild( link );
+      link.setAttribute('download', 'usuarios.xlsx');
+      document.body.appendChild(link);
       link.click();
-    } catch ( error ) {
-      console.error( 'Error al exportar usuarios:', error );
+    } catch (error) {
+      console.error('Error al exportar usuarios:', error.response?.data || error);
+      alert(error.response?.data?.error || 'Error al exportar usuarios.');
     }
   };
+  
 
   // Datos para la gráfica de usuarios por rol
   const roles = usuarios.reduce( ( acc, usuario ) => {
